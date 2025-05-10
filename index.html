@@ -5,6 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bookshelf App</title>
 
+    <!--CSS-->
+    <style>
+      body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f3f4f6;
+        margin: 0;
+        padding: 2rem;
+        color: #1f2937;
+      }
+    
+      header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+    
+      header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #111827;
+      }
+    
+      section {
+        margin-bottom: 2rem;
+        padding: 2rem;
+        border-radius: 1rem;
+        background: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e5e7eb;
+      }
+    
+      #tambahBuku {
+        border-left: 6px solid #3b82f6;
+      }
+    
+      #cariBuku {
+        border-left: 6px solid #10b981;
+      }
+    
+      #belumSelesaiBaca {
+        border-left: 6px solid #f59e0b;
+      }
+    
+      #sudahSelesaiBaca {
+        border-left: 6px solid #6366f1;
+      }
+    
+      section h2 {
+        font-size: 1.6rem;
+        margin-bottom: 1.2rem;
+        color: #1e293b;
+      }
+    
+      form > div {
+        margin-bottom: 1rem;
+      }
+    
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+        color: #374151;
+      }
+    
+      input[type="text"],
+      input[type="number"] {
+        width: 100%;
+        padding: 0.5rem;
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+        font-size: 1rem;
+      }
+    
+      input[type="checkbox"] {
+        transform: scale(1.2);
+        margin-top: 0.3rem;
+      }
+    
+      button {
+        background-color: #3b82f6;
+        color: white;
+        padding: 0.6rem 1.2rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+    
+      button:hover {
+        background-color: #2563eb;
+      }
+    </style>    
+
     <!-- Impor script kamu di sini -->
     <!-- Lampirkan `defer` jika pemanggilan dilakukan dalam <head> -->
     <script defer src="main.js"></script>
@@ -15,7 +108,7 @@
     </header>
 
     <main>
-      <section>
+      <section id="tambahBuku">
         <h2>Tambah Buku Baru</h2>
         <form id="bookForm" data-testid="bookForm">
           <div>
@@ -44,7 +137,7 @@
         </form>
       </section>
 
-      <section>
+      <section id="cariBuku">
         <h2>Cari Buku</h2>
         <form id="searchBook" data-testid="searchBookForm">
           <label for="searchBookTitle">Judul</label>
@@ -55,7 +148,7 @@
         </form>
       </section>
 
-      <section>
+      <section id="belumSelesaiBaca">
         <h2>Belum selesai dibaca</h2>
 
         <div id="incompleteBookList" data-testid="incompleteBookList">
@@ -76,7 +169,7 @@
         </div>
       </section>
 
-      <section>
+      <section id="sudahSelesaiBaca">
         <h2>Selesai dibaca</h2>
 
         <div id="completeBookList" data-testid="completeBookList">

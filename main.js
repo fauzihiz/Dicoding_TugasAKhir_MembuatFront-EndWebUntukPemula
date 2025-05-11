@@ -24,10 +24,10 @@ form.addEventListener('submit', function (e) {
   e.preventDefault(); // Mencegah reload halaman
 
   // Ambil nilai dari input dan checkbox
-  const bookTitle = document.getElementById('bookFormTitle').value;
-  const bookAuthor = document.getElementById('bookFormAuthor').value;
-  const bookYear = document.getElementById('bookFormYear').value;
-  const bookIsComplete = checkbox.checked;
+  const title = document.getElementById('bookFormTitle').value;
+  const author = document.getElementById('bookFormAuthor').value;
+  const year = document.getElementById('bookFormYear').value;
+  const isComplete = checkbox.checked;
   const editingId = form.getAttribute('data-editing-id');
 
   // Get data from local storage
@@ -36,19 +36,19 @@ form.addEventListener('submit', function (e) {
   //check mode update/edit atau mode add
   if (editingId) {
     // Mode Edit
-    const index = allBooks.findIndex(item => item.bookId === editingId);
+    const index = allBooks.findIndex(item => item.id === editingId);
     if (index !== -1) {
-      allBooks[index] = { ...allBooks[index], bookTitle, bookAuthor, bookYear, bookIsComplete };
+      allBooks[index] = { ...allBooks[index], title, author, year, isComplete };
       form.setAttribute('data-editing-id', '');
     }
   } else {
     // Mode Add
     const dataBuku = {
-      bookId: generateUniqueId(),
-      bookTitle,
-      bookAuthor,
-      bookYear,
-      bookIsComplete
+      id: generateUniqueId(),
+      title,
+      author,
+      year,
+      isComplete
     };
     allBooks.push(dataBuku);
   }
@@ -71,15 +71,15 @@ function tampilkanData(data = null) {
 
   dataTersimpan.forEach(buku => {
     const el = document.createElement('div');
-    el.setAttribute('data-bookid', buku.bookId);
+    el.setAttribute('data-bookid', buku.id);
     el.setAttribute('data-testid', 'bookItem');
 
     el.innerHTML = `
-      <h3 data-testid="bookItemTitle">${buku.bookTitle}</h3>
-      <p data-testid="bookItemAuthor">Penulis: ${buku.bookAuthor}</p>
-      <p data-testid="bookItemYear">Tahun: ${buku.bookYear}</p>
+      <h3 data-testid="bookItemTitle">${buku.title}</h3>
+      <p data-testid="bookItemAuthor">Penulis: ${buku.author}</p>
+      <p data-testid="bookItemYear">Tahun: ${buku.year}</p>
       <div>
-        <button data-testid="bookItemIsCompleteButton">${buku.bookIsComplete ? 'Belum dibaca' : 'Selesai dibaca'}</button>
+        <button data-testid="bookItemIsCompleteButton">${buku.isComplete ? 'Belum dibaca' : 'Selesai dibaca'}</button>
         <button data-testid="bookItemDeleteButton">Hapus Buku</button>
         <button data-testid="bookItemEditButton">Edit Buku</button>
       </div>
@@ -88,9 +88,9 @@ function tampilkanData(data = null) {
     // Button Toggle selesai/belum
     el.querySelector('[data-testid="bookItemIsCompleteButton"]').addEventListener('click', () => {
       const books = JSON.parse(localStorage.getItem('formData')) || [];
-      const index = books.findIndex(item => item.bookId === buku.bookId);
+      const index = books.findIndex(item => item.id === buku.id);
       if (index !== -1) {
-        books[index].bookIsComplete = !books[index].bookIsComplete;
+        books[index].isComplete = !books[index].isComplete;
         localStorage.setItem('formData', JSON.stringify(books));
         tampilkanData();
       }
@@ -99,23 +99,23 @@ function tampilkanData(data = null) {
     // Button Delete 
     el.querySelector('[data-testid="bookItemDeleteButton"]').addEventListener('click', () => {
       let books = JSON.parse(localStorage.getItem('formData')) || [];
-      books = books.filter(item => item.bookId !== buku.bookId);
+      books = books.filter(item => item.id !== buku.id);
       localStorage.setItem('formData', JSON.stringify(books));
       tampilkanData();
     });
 
     // Button Edit
     el.querySelector('[data-testid="bookItemEditButton"]').addEventListener('click', () => {
-      document.getElementById('bookFormTitle').value = buku.bookTitle;
-      document.getElementById('bookFormAuthor').value = buku.bookAuthor;
-      document.getElementById('bookFormYear').value = buku.bookYear;
-      checkbox.checked = buku.bookIsComplete;
-      form.setAttribute('data-editing-id', buku.bookId);
+      document.getElementById('bookFormTitle').value = buku.title;
+      document.getElementById('bookFormAuthor').value = buku.author;
+      document.getElementById('bookFormYear').value = buku.year;
+      checkbox.checked = buku.isComplete;
+      form.setAttribute('data-editing-id', buku.id);
       submitBtn.innerHTML = 'Update Data Buku';
     });
 
     // Masukkan ke rak yang sesuai
-    (buku.bookIsComplete ? completeList : incompleteList).appendChild(el);
+    (buku.isComplete ? completeList : incompleteList).appendChild(el);
   });
 }
 
@@ -124,7 +124,7 @@ searchForm.addEventListener('submit', function (e) {
   e.preventDefault();
   const keyword = searchInput.value.toLowerCase();
   const books = JSON.parse(localStorage.getItem('formData')) || [];
-  const hasil = books.filter(book => book.bookTitle.toLowerCase().includes(keyword));
+  const hasil = books.filter(book => book.title.toLowerCase().includes(keyword));
   tampilkanData(hasil);
 });
 

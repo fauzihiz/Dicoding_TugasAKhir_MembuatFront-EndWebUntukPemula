@@ -26,7 +26,7 @@ form.addEventListener('submit', function (e) {
   // Ambil nilai dari input dan checkbox
   const title = document.getElementById('bookFormTitle').value;
   const author = document.getElementById('bookFormAuthor').value;
-  const year = document.getElementById('bookFormYear').value;
+  const year = parseInt(document.getElementById('bookFormYear').value,10);
   const isComplete = checkbox.checked;
   const editingId = form.getAttribute('data-editing-id');
 
